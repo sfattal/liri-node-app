@@ -26,6 +26,10 @@ function search() {
         case "movie-this":
         findMovie();
         break;
+
+        case "do-what-it-says":
+        findRandom();
+        break;
     }
 }
 
@@ -43,12 +47,34 @@ function findConcert() {
     }
 )}
 
+// Spotify Function
+function findSong() {
+    if (request === "") {
+        request = "The Sign"
+    }
+    spotify.search({
+        type: "track",
+        query: request,
+    }, function(err, data) {
+        if (err) {
+            return console.log(err)
+        }
+        var jsonData = data.tracks.items[0]
+        var showSong = [
+            "Artist: " + jsonData.artists[0].name,
+            "Song Name: " + jsonData.name,
+            "Preview Link: " + jsonData.preview_url,
+            "Album: " + jsonData.album.name,
+        ].join("\n");
+        console.log(showSong)
+    })
+}
+
 // OMDB Function:
 function findMovie() {
     if (request === "") {
         request = "Mr. Nobody"
     }
-    console.log(request)
     axios.get("http://www.omdbapi.com/?t=" + request + "&y=&plot=short&apikey=trilogy")
     .then(function(response) {
         var jsonData = response.data;
@@ -65,5 +91,18 @@ function findMovie() {
         console.log(showMovie)
     }
 )}
+
+// Do what it says Function:
+// function findRandom() {
+//     fs.readFile("random.txt", function(err, data) {
+//         if (err) {
+//             throw err;
+//         }
+//         command = data.substring(","[, length]);
+//         request = data.substring(data.indexOf(",") + 1, data.length - 1);
+//         console.log(command + request)
+//         // search()
+//     })  
+// }
 
 search()
