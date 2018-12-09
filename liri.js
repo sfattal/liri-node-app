@@ -13,33 +13,51 @@ var fs = require("fs")
 var command = process.argv[2];
 var request = process.argv.slice(3).join(" ");
 
-// function search(command) {
-//     switch(command) {
-//         case "concert-this":
-//         findConcert();
-//         break;
+function search() {
+    switch(command) {
+        case "concert-this":
+        findConcert();
+        break;
 
-//         case "spotify-this-song":
-//         findSong();
-//         break;
+        case "spotify-this-song":
+        findSong();
+        break;
 
-//         case "movie-this":
-//         findMovie();
-//         break;
-//     }
-// }
+        case "movie-this":
+        findMovie();
+        break;
+    }
+}
 
-function findConcert(request) {
+// Bands In Town Function
+function findConcert() {
     axios.get("https://rest.bandsintown.com/artists/" + request + "/events?app_id=codingbootcamp")
     .then(function(response) {
-        var jsonData = response.data;
+        var jsonData = response.data[0];
 
-        var showData = [
+        var showConcert = [
             "Venue Name: " + jsonData.venue.name,
             "Venue Location: " + jsonData.venue.city,
             "Date of Event: " + moment(jsonData.datetime).format('MM/DD/YYYY'),
         ].join("\n");
-        console.log(showData)
+        console.log(showConcert)
     }
 )}
-findConcert()
+
+// Spotify Function
+function findSong() {
+    spotify.search({
+        type: 'track',
+        query: request,
+    }, function(err, data) {
+        if (err) {
+            console.log("Error occurred finding your song")
+        }
+    
+        var showSong = [
+            ""
+        ]
+    })
+}
+
+search()
