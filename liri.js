@@ -92,17 +92,17 @@ function findMovie() {
     }
 )}
 
-// Do what it says Function:
-// function findRandom() {
-//     fs.readFile("random.txt", function(err, data) {
-//         if (err) {
-//             throw err;
-//         }
-//         command = data.substring(","[, length]);
-//         request = data.substring(data.indexOf(",") + 1, data.length - 1);
-//         console.log(command + request)
-//         // search()
-//     })  
-// }
+// random.txt Function:
+function findRandom() {
+    fs.readFile("./random.txt", function(err, data) {
+        if (err) {
+            throw err;
+        }
+        command = data.substring(0,16);
+        request = data.substring(19,36);
+        console.log(command + request)
+        // search()
+    })  
+}
 
 search()
