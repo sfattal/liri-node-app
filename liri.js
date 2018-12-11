@@ -37,7 +37,7 @@ function search() {
 function findConcert() {
     axios.get("https://rest.bandsintown.com/artists/" + request + "/events?app_id=codingbootcamp")
     .then(function(response) {
-        var jsonData = response.data[0];
+        var jsonData = response.data[1];
         var showConcert = [
             "Venue Name: " + jsonData.venue.name,
             "Venue Location: " + jsonData.venue.city,
@@ -94,14 +94,14 @@ function findMovie() {
 
 // random.txt Function:
 function findRandom() {
-    fs.readFile("./random.txt", function(err, data) {
+    fs.readFile("./random.txt", "utf8",function(err, data) {
         if (err) {
             throw err;
         }
-        command = data.substring(0,16);
-        request = data.substring(19,36);
+        command = data.substring(0, data.indexOf(","));
+        request = data.substring(data.indexOf(",") + 2, data.length - 1);
         console.log(command + request)
-        // search()
+        search()
     })  
 }
 
