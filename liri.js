@@ -44,7 +44,7 @@ function findConcert() {
                 "Venue Location: " + concert.venue.city,
                 "Date of Event: " + moment(concert.datetime).format('MM/DD/YYYY'),
             ].join("\n");
-            console.log(showConcert)
+            console.log(showConcert + "\n---------------------------------------------\n")
 
             fs.appendFile("log.txt", showConcert, "utf8", function(err) {
                 if (err) {
