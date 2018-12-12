@@ -37,15 +37,26 @@ function search() {
 function findConcert() {
     axios.get("https://rest.bandsintown.com/artists/" + request + "/events?app_id=codingbootcamp")
     .then(function(response) {
-        var jsonData = response.data[1];
-        var showConcert = [
-            "Venue Name: " + jsonData.venue.name,
-            "Venue Location: " + jsonData.venue.city,
-            "Date of Event: " + moment(jsonData.datetime).format('MM/DD/YYYY'),
-        ].join("\n");
-        console.log(showConcert)
-    }
-)}
+        var responseArray = response.data;
+        responseArray.forEach(function(concert){
+            var showConcert = [
+                "Venue Name: " + concert.venue.name,
+                "Venue Location: " + concert.venue.city,
+                "Date of Event: " + moment(concert.datetime).format('MM/DD/YYYY'),
+            ].join("\n");
+            console.log(showConcert)
+
+            fs.appendFile("log.txt", showConcert, "utf8", function(err) {
+                if (err) {
+                    console.log("ERROR - Could not write to file")
+                }
+                else {
+                console.log("SUCCESS - Added to file")
+                }
+            })
+        })
+    })
+}
 
 // Spotify Function
 function findSong() {
@@ -67,6 +78,15 @@ function findSong() {
             "Album: " + jsonData.album.name,
         ].join("\n");
         console.log(showSong)
+
+        fs.appendFile("log.txt", showSong, "utf8", function(err) {
+            if (err) {
+                console.log("ERROR - Could not write to file")
+            }
+            else {
+            console.log("SUCCESS - Added to file")
+            }
+        })
     })
 }
 
@@ -89,6 +109,15 @@ function findMovie() {
             "Actors: " + jsonData.Actors,
         ].join("\n");
         console.log(showMovie)
+
+        fs.appendFile("log.txt", showMovie, "utf8", function(err) {
+            if (err) {
+                console.log("ERROR - Could not write to file")
+            }
+            else {
+            console.log("SUCCESS - Added to file")
+            }
+        })
     }
 )}
 
